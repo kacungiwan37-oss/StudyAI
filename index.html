@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyAI - Asisten Belajar</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#0b1020;color:white}
+header{padding:20px;background:#151d35;display:flex;justify-content:space-between}
+.logo{font-size:23px;font-weight:bold;color:#65a8ff}
+.container{max-width:750px;margin:35px auto;padding:20px}
+.card{background:#151d35;padding:25px;border-radius:18px}
+h1{font-size:30px}
+input,textarea{width:100%;padding:15px;margin:10px 0;border:1px solid #34415f;border-radius:10px;background:#0b1020;color:white;font-size:16px}
+button{padding:13px 20px;border:0;border-radius:10px;background:#3985ff;color:white;font-weight:bold;cursor:pointer}
+button:hover{background:#2465d0}
+.hidden{display:none}
+#answer{white-space:pre-wrap;line-height:1.7;background:#202b48;padding:18px;border-radius:12px;margin-top:20px}
+.menu{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+.small{color:#aab6d0;font-size:13px}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">✦ StudyAI</div>
+<button onclick="logout()">Keluar</button>
+</header>
+
+<div class="container">
+
+<div id="login" class="card">
+<h1>Selamat Datang 👋</h1>
+<p>Masuk ke akun StudyAI kamu.</p>
+<input id="username" placeholder="Nama pengguna">
+<input id="password" type="password" placeholder="Password">
+<button onclick="masuk()">Masuk / Daftar</button>
+<p class="small">Versi demo: akun disimpan di browser ini.</p>
+</div>
+
+<div id="dashboard" class="hidden">
+<h1>Halo, <span id="nama"></span>! 👋</h1>
+<p>Belajar lebih mudah bersama StudyAI.</p>
+
+<div class="menu">
+<button onclick="contoh('Matematika')">Matematika</button>
+<button onclick="contoh('Bahasa Indonesia')">Bahasa Indonesia</button>
+<button onclick="contoh('IPA')">IPA</button>
+<button onclick="contoh('Bahasa Inggris')">Bahasa Inggris</button>
+</div>
+
+<div class="card">
+<h3>✦ Tanya StudyAI</h3>
+<textarea id="question" rows="4" placeholder="Tulis pertanyaan atau tugas sekolah kamu..."></textarea>
+<button onclick="jawab()">Kirim Pertanyaan ➜</button>
+<div id="answer" class="hidden"></div>
+</div>
+</div>
+
+</div>
+
+<script>
+function masuk(){
+let u=document.getElementById('username').value.trim();
+let p=document.getElementById('password').value;
+if(!u||!p){alert('Isi nama dan password!');return;}
+localStorage.setItem('study_user',u);
+buka(u);
+}
+function buka(u){
+document.getElementById('login').classList.add('hidden');
+document.getElementById('dashboard').classList.remove('hidden');
+document.getElementById('nama').textContent=u;
+}
+function logout(){
+localStorage.removeItem('study_user');
+location.reload();
+}
+function contoh(mapel){
+document.getElementById('question').value=
+'Bantu saya belajar '+mapel+'. Berikan penjelasan dan contoh soal.';
+}
+function jawab(){
+let q=document.getElementById('question').value.trim();
+if(!q){alert('Tulis pertanyaan dulu!');return;}
+let a=document.getElementById('answer');
+a.classList.remove('hidden');
+a.textContent='Pertanyaan: '+q+
+'\n\nStudyAI versi demo belum terhubung ke mesin AI. Hubungkan backend dan API AI untuk mendapatkan jawaban otomatis.';
+}
+let user=localStorage.getItem('study_user');
+if(user)buka(user);
+</script>
+
+</body>
+  </html>
+  
